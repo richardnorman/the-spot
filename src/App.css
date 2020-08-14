@@ -1,0 +1,9 @@
+.App {
+  text-align: center;
+}
+
+.recent-spots {
+  width: 95%;
+  color: gray;
+  padding-left: 5%;
+}
