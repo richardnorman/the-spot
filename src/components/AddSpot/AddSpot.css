@@ -1,0 +1,25 @@
+.editable-card {
+    margin: 5% 0 0 10%;
+}
+
+.done-button {
+    width: 60% !important;
+    margin: 5% 20% 5% 20% !important;
+}
+
+.add-image-button {
+    width: 50% !important;
+    margin: 0 25% 0 25% !important;
+}
+
+.add-spot-title {
+    text-align: center;
+}
+
+.inputs {
+    width: 100%;
+}
+
+.use-location-switch {
+    margin-top: 1rem;
+}

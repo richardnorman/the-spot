@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, Fragment} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,6 +7,7 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import Drawer from '@material-ui/core/Drawer';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,36 +66,43 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = () => {
     const classes = useStyles();
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     return (
-        <AppBar style={{background: 'white', color: 'black' }} position="sticky">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            The Spot
-          </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search your spots"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
-        </Toolbar>
-      </AppBar>
+        <Fragment>
+                <AppBar style={{background: 'white', color: 'black' }} position="sticky">
+                <Toolbar>
+                <IconButton
+                    edge="start"
+                    className={classes.menuButton}
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={() => drawerOpen ? setDrawerOpen(false) : setDrawerOpen(true)}
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Typography className={classes.title} variant="h6" noWrap>
+                    The Spot
+                </Typography>
+                <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                    <SearchIcon />
+                    </div>
+                    <InputBase
+                    placeholder="Search your spots"
+                    classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput,
+                    }}
+                    inputProps={{ 'aria-label': 'search' }}
+                    />
+                </div>
+                </Toolbar>
+            </AppBar>
+            <Drawer anchor={"left"} open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                <h2 onClick={() => alert('Signed out')} style={{padding: '25px', cursor: 'pointer'}}>Sign out</h2>
+            </Drawer>
+        </Fragment>
     );
 }
 
