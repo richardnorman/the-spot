@@ -20,7 +20,7 @@ export default function App() {
 
   const DisplaySpots = props => {
     if(props.list.length === 0) {
-      return <h2 style={{textAlign: 'center', marginTop: '30%'}}>No spots found, <Link to='/the-spot/add-spot'>add one now!</Link></h2>
+      return <p style={{textAlign: 'center', marginTop: '10%', fontSize: '1.5rem'}}>No spots found, <Link to='/the-spot/add-spot' style={{color: 'black'}}><strong>add one now!</strong></Link></p>
     } else if(props.list.length > 0) {
       return props.list.map(spot => {
         return <SpotCard title={spot.title} description={spot.description} image={spot.image} coords={spot.coords}/>
