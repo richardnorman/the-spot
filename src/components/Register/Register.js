@@ -26,14 +26,14 @@ const Register = _ => {
                         <TextField className='inputs action-text-field' id='standard-basic' label='Password' type='password' />
                         <div className='card-buttons-container'>
                             <div>
-                                <Link to='/' style={{ textDecoration: 'none' }}>
+                                <Link to='/the-spot/' style={{ textDecoration: 'none' }}>
                                     <Fab color='primary' className='main-action-button' variant="extended">
                                         Register
                                     </Fab>
                                 </Link>
                             </div>
                             <div>
-                                <Link to='/sign-in' style={{ textDecoration: 'none', color: 'black' }}>
+                                <Link to='/the-spot/sign-in' style={{ textDecoration: 'none', color: 'black' }}>
                                     <p>Sign In</p>
                                 </Link>
                             </div>

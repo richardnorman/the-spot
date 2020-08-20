@@ -102,7 +102,7 @@ const AddSpot = () => {
                         </CardContent>
                 </Card>
             </div>
-            <Link to='/' style={{ textDecoration: 'none' }}>
+            <Link to='/the-spot/' style={{ textDecoration: 'none' }}>
                 <Fab disabled={(spotName === '' || spotLocation === '') ? true : false} onClick={() => {
                     dispatch(addSpot([
                             {title: spotName, 

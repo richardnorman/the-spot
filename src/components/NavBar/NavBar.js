@@ -109,7 +109,7 @@ const NavBar = () => {
                 </Toolbar>
             </AppBar>
             <Drawer anchor={"left"} open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                <Link to='/sign-in' style={{textDecoration: 'none', color: 'black'}}>
+                <Link to='/the-spot/sign-in' style={{textDecoration: 'none', color: 'black'}}>
                     <h2 style={{paddingLeft: '15px', paddingRight: '60px', cursor: 'pointer'}}>Sign out</h2>
                 </Link>
             </Drawer>

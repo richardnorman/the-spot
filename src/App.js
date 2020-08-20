@@ -20,7 +20,7 @@ export default function App() {
 
   const DisplaySpots = props => {
     if(props.list.length === 0) {
-      return <h2 style={{textAlign: 'center', marginTop: '30%'}}>No spots found, <Link to='/add-spot'>add one now!</Link></h2>
+      return <h2 style={{textAlign: 'center', marginTop: '30%'}}>No spots found, <Link to='/the-spot/add-spot'>add one now!</Link></h2>
     } else if(props.list.length > 0) {
       return props.list.map(spot => {
         return <SpotCard title={spot.title} description={spot.description} image={spot.image} coords={spot.coords}/>
@@ -29,12 +29,11 @@ export default function App() {
       return null;
     }
   }
-  alert('workin')
     return (
       <Router>
         <div>
           <Switch>
-            <Route exact path='/'>
+            <Route exact path='/the-spot'>
               <NavBar />
               {/* <h1 onClick={()=>alert(`Spots: ${spotList}\nSearch Text: ${searchText}`)}>Click for state</h1> */}
               <p className='recent-spots'>Recently added</p>
@@ -43,15 +42,15 @@ export default function App() {
               <DisplaySpots list={spotList.filter(spot => {
                 return (spot.title.toLowerCase().includes(searchText.toLowerCase()) || spot.description.toLowerCase().includes(searchText.toLowerCase()));
               })} />}
-              <Link to='/add-spot'><AddSpotButton /></Link>
+              <Link to='/the-spot/add-spot'><AddSpotButton /></Link>
             </Route>
-            <Route path='/add-spot'>
+            <Route path='/the-spot/add-spot'>
               <AddSpot />
             </Route>
-            <Route path='/sign-in'>
+            <Route path='/the-spot/sign-in'>
               <SignIn />
             </Route>
-            <Route path='/register'>
+            <Route path='/the-spot/register'>
               <Register />
             </Route>
           </Switch>
