@@ -1,0 +1,32 @@
+.action-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.action-card {
+    width: 70%;
+    margin-bottom: 10%;
+}
+
+.action-text-field {
+    margin-bottom: 1rem !important;
+    width: 80%;
+}
+
+.main-action-button {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+
+.card-buttons-container {
+    display: flex;
+    align-items: center;
+    margin-top: 1.5rem !important;
+}
+
+.card-buttons-container > div {
+    padding-right: 2rem !important;
+}

@@ -8,6 +8,9 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Drawer from '@material-ui/core/Drawer';
+import {useSelector, useDispatch} from 'react-redux';
+import { changeSearch } from '../../actions';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -67,6 +70,11 @@ const useStyles = makeStyles((theme) => ({
 const NavBar = () => {
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const dispatch = useDispatch();
+    
+    const handleSearchChange = event => {
+        dispatch(changeSearch(event.target.value));
+    }
 
     return (
         <Fragment>
@@ -82,7 +90,7 @@ const NavBar = () => {
                     <MenuIcon />
                 </IconButton>
                 <Typography className={classes.title} variant="h6" noWrap>
-                    The Spot
+                    My Spots
                 </Typography>
                 <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -95,12 +103,15 @@ const NavBar = () => {
                         input: classes.inputInput,
                     }}
                     inputProps={{ 'aria-label': 'search' }}
+                    onChange={handleSearchChange}
                     />
                 </div>
                 </Toolbar>
             </AppBar>
             <Drawer anchor={"left"} open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                <h2 onClick={() => alert('Signed out')} style={{padding: '25px', cursor: 'pointer'}}>Sign out</h2>
+                <Link to='/sign-in' style={{textDecoration: 'none', color: 'black'}}>
+                    <h2 style={{paddingLeft: '15px', paddingRight: '60px', cursor: 'pointer'}}>Sign out</h2>
+                </Link>
             </Drawer>
         </Fragment>
     );

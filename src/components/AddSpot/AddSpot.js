@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 });
 
 const AddSpot = () => {
-    const spotList = useSelector(state => state.spotList);
+    const spotList = useSelector(state => state.modifySpotList.spotList);
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -104,14 +104,12 @@ const AddSpot = () => {
             </div>
             <Link to='/' style={{ textDecoration: 'none' }}>
                 <Fab disabled={(spotName === '' || spotLocation === '') ? true : false} onClick={() => {
-                    dispatch({
-                        type: ADD_SPOT, 
-                        payload: [
+                    dispatch(addSpot([
                             {title: spotName, 
                             description: spotDescription, 
                             image: spotImage === '' ? 'https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png' : spotImage, 
                             coords: spotLocation},
-                            ...spotList]})}}
+                            ...spotList]))}}
                      color='primary' className='done-button' variant="extended">
                 Done
                 </Fab>

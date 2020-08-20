@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 import SpotCard from './components/SpotCard/SpotCard';
 import AddSpotButton from './components/AddSpotButton/AddSpotButton';
@@ -11,65 +10,25 @@ import {
   Link
 } from 'react-router-dom';
 import AddSpot from './components/AddSpot/AddSpot';
-import { useSelector, useDispatch } from 'react-redux';
-import { addSpot } from './actions';
-// import { createStore } from 'redux';
-import {
-  ADD_SPOT
-} from './constants';
-
-const spots = [
-  {
-    title: '17th Ave',
-    description: 'Very cool place would definitely go again to check out the ice cream shop. Also very friendly customer service.',
-    image: 'https://17thave.ca/wp-content/uploads/2019/10/Traffic1.jpg',
-    coords: '51.037794,-114.1505217'
-  },
-  {
-    title: 'The Calgary Tower',
-    description: 'Definitely have to go up to the top and stand on the glass door. Enjoyed the view.',
-    image: 'https://i.ytimg.com/vi/7hnTQXKUyvw/maxresdefault.jpg',
-    coords: '51.037794,-114.1505217'
-  }
-]
-
-// const mapStateToProps = state => {
-//   return {
-//     spotList: state.modifySpotList.spotList
-//   }
-// }
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onAddSpot: (spot) => dispatch(addSpot(spot))
-//   }
-// }
-
-// const initialSpotsList = [];
-
-// function spotList(spotsList = initialSpotsList, action) {
-//   switch(action.type) {
-//     case 'ADD_SPOT':
-//       return [...spotsList, action.payload];
-//     default:
-//       return spotsList;
-//     }
-// }
-
-// let store = createStore(spotList);
-  
-// store.dispatch({ type: 'ADD_SPOT', payload:   {
-//   title: 'The Calgary Tower',
-//   description: 'Definitely have to go up to the top and stand on the glass door. Enjoyed the view.',
-//   image: 'https://i.ytimg.com/vi/7hnTQXKUyvw/maxresdefault.jpg',
-//   coords: '51.037794,-114.1505217'
-// } })
-
-// console.log(store.getState())
+import { useSelector } from 'react-redux';
+import SignIn from './components/SignIn/SignIn';
+import Register from './components/Register/Register';
 
 export default function App() {
-  const spotList = useSelector(state => state.spotList);
-  const dispatch = useDispatch();
+  const spotList = useSelector(state => state.modifySpotList.spotList);
+  const searchText = useSelector(state => state.changeSearch.searchText);
+
+  const DisplaySpots = props => {
+    if(props.list.length === 0) {
+      return <h2 style={{textAlign: 'center', marginTop: '30%'}}>No spots found, <Link to='/add-spot'>add one now!</Link></h2>
+    } else if(props.list.length > 0) {
+      return props.list.map(spot => {
+        return <SpotCard title={spot.title} description={spot.description} image={spot.image} coords={spot.coords}/>
+      })
+    } else {
+      return null;
+    }
+  }
 
     return (
       <Router>
@@ -77,19 +36,26 @@ export default function App() {
           <Switch>
             <Route exact path='/'>
               <NavBar />
+              {/* <h1 onClick={()=>alert(`Spots: ${spotList}\nSearch Text: ${searchText}`)}>Click for state</h1> */}
               <p className='recent-spots'>Recently added</p>
-              {spotList !== undefined && spotList.map(spot => {
-                return <SpotCard title={spot.title} description={spot.description} image={spot.image} coords={spot.coords}/>
-              })}
+              {(searchText === '' || searchText === undefined) ? 
+              <DisplaySpots list={spotList} /> : 
+              <DisplaySpots list={spotList.filter(spot => {
+                return (spot.title.toLowerCase().includes(searchText.toLowerCase()) || spot.description.toLowerCase().includes(searchText.toLowerCase()));
+              })} />}
               <Link to='/add-spot'><AddSpotButton /></Link>
             </Route>
             <Route path='/add-spot'>
               <AddSpot />
+            </Route>
+            <Route path='/sign-in'>
+              <SignIn />
+            </Route>
+            <Route path='/register'>
+              <Register />
             </Route>
           </Switch>
         </div>
       </Router>
     );
 }
-
-//export default connect(mapStateToProps, mapDispatchToProps)(App);
