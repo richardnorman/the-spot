@@ -10,6 +10,11 @@ import Button from '@material-ui/core/Button';
 import '../SharedComponentStyles/CardForm.css';
 
 const SignIn = _ => {
+
+    const handleSignIn = _ => {
+
+    }
+
     return (
         <div className='action-container'>
             <Card className='action-card'>
@@ -28,9 +33,9 @@ const SignIn = _ => {
                             <div className='card-buttons-container'>
                                 <div>
                                     <Link to='/the-spot/' style={{ textDecoration: 'none' }}>
-                                        <Fab color='primary' className='main-action-button' variant="extended">
+                                        <Fab onClick={handleSignIn} color='primary' className='main-action-button' variant="extended">
                                             Sign In
-                                                </Fab>
+                                        </Fab>
                                     </Link>
                                 </div>
                                 <div>

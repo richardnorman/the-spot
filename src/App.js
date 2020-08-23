@@ -18,6 +18,46 @@ export default function App() {
   const spotList = useSelector(state => state.modifySpotList.spotList);
   const searchText = useSelector(state => state.changeSearch.searchText);
 
+  //test spot list for testing purposes
+  // const spotList = [
+  //   {
+  //     title: 'Test 1',
+  //     description: 'This is a description',
+  //     image: '',
+  //     coords: ''
+  //   },
+  //   {
+  //     title: 'Test 2',
+  //     description: 'This is a description',
+  //     image: '',
+  //     coords: ''
+  //   },
+  //   {
+  //     title: 'Test 3',
+  //     description: 'This is a description',
+  //     image: '',
+  //     coords: ''
+  //   },
+  //   {
+  //     title: 'Test 4',
+  //     description: 'This is a description',
+  //     image: '',
+  //     coords: ''
+  //   },
+  //   {
+  //     title: 'Test 5',
+  //     description: 'This is a description',
+  //     image: '',
+  //     coords: ''
+  //   },
+  //   {
+  //     title: 'Test 6',
+  //     description: 'This is a description',
+  //     image: '',
+  //     coords: ''
+  //   },
+  // ]
+
   const DisplaySpots = props => {
     if(props.list.length === 0) {
       return <p style={{textAlign: 'center', marginTop: '15%', fontSize: '1.5rem'}}>No spots found, <Link to='/the-spot/add-spot' style={{color: 'black'}}><strong>add one now!</strong></Link></p>
@@ -37,11 +77,13 @@ export default function App() {
               <NavBar />
               {/* <h1 onClick={()=>alert(`Spots: ${spotList}\nSearch Text: ${searchText}`)}>Click for state</h1> */}
               <p className='recent-spots'>Recently added</p>
-              {(searchText === '' || searchText === undefined) ? 
-              <DisplaySpots list={spotList} /> : 
-              <DisplaySpots list={spotList.filter(spot => {
-                return (spot.title.toLowerCase().includes(searchText.toLowerCase()) || spot.description.toLowerCase().includes(searchText.toLowerCase()));
-              })} />}
+              <div id='spots-grid' className={spotList.length === 0 ? '' : 'spots-grid'}>                                                                                
+                {(searchText === '' || searchText === undefined) ? 
+                <DisplaySpots list={spotList} /> : 
+                <DisplaySpots list={spotList.filter(spot => {
+                  return (spot.title.toLowerCase().includes(searchText.toLowerCase()) || spot.description.toLowerCase().includes(searchText.toLowerCase()));
+                })} />}
+              </div>
               <Link to='/the-spot/add-spot'><AddSpotButton /></Link>
             </Route>
             <Route path='/the-spot/add-spot'>
