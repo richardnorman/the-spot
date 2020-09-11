@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import SpotCard from './components/SpotCard/SpotCard';
 import AddSpotButton from './components/AddSpotButton/AddSpotButton';
@@ -7,63 +7,40 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  useHistory
 } from 'react-router-dom';
 import AddSpot from './components/AddSpot/AddSpot';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
+import UpdateSpot from './components/UpdateSpot/UpdateSpot';
+import { setSpotList } from './actions';
 
 export default function App() {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const spotList = useSelector(state => state.modifySpotList.spotList);
   const searchText = useSelector(state => state.changeSearch.searchText);
+  const currentUser = useSelector(state => state.changeCurrentUser.currentUserEmail);
 
-  //test spot list for testing purposes
-  // const spotList = [
-  //   {
-  //     title: 'Test 1',
-  //     description: 'This is a description',
-  //     image: '',
-  //     coords: ''
-  //   },
-  //   {
-  //     title: 'Test 2',
-  //     description: 'This is a description',
-  //     image: '',
-  //     coords: ''
-  //   },
-  //   {
-  //     title: 'Test 3',
-  //     description: 'This is a description',
-  //     image: '',
-  //     coords: ''
-  //   },
-  //   {
-  //     title: 'Test 4',
-  //     description: 'This is a description',
-  //     image: '',
-  //     coords: ''
-  //   },
-  //   {
-  //     title: 'Test 5',
-  //     description: 'This is a description',
-  //     image: '',
-  //     coords: ''
-  //   },
-  //   {
-  //     title: 'Test 6',
-  //     description: 'This is a description',
-  //     image: '',
-  //     coords: ''
-  //   },
-  // ]
+  useEffect(() => {
+    fetch(`http://localhost:3001/get-spots/${currentUser}`)
+    .then(response => response.json())
+    .then(data => {
+      dispatch(setSpotList(data));
+    })
+    .catch(err => console.log(err))
+  })
 
   const DisplaySpots = props => {
     if(props.list.length === 0) {
       return <p style={{textAlign: 'center', marginTop: '15%', fontSize: '1.5rem'}}>No spots found, <Link to='/the-spot/add-spot' style={{color: 'black'}}><strong>add one now!</strong></Link></p>
     } else if(props.list.length > 0) {
       return props.list.map(spot => {
-        return <SpotCard title={spot.title} description={spot.description} image={spot.image} coords={spot.coords}/>
+        return (
+            <SpotCard id={spot.id} title={spot.title} description={spot.description} image={spot.image} coords={spot.coords} dateCreated={spot.dateCreated}/>
+        );
       })
     } else {
       return null;
@@ -75,7 +52,7 @@ export default function App() {
           <Switch>
             <Route exact path='/the-spot'>
               <NavBar />
-              {/* <h1 onClick={()=>alert(`Spots: ${spotList}\nSearch Text: ${searchText}`)}>Click for state</h1> */}
+              {/* <h1 onClick={()=>alert(currentUser)}>Click for state</h1> */}
               <p className='recent-spots'>Recently added</p>
               <div id='spots-grid' className={spotList.length === 0 ? '' : 'spots-grid'}>                                                                                
                 {(searchText === '' || searchText === undefined) ? 
@@ -88,6 +65,9 @@ export default function App() {
             </Route>
             <Route path='/the-spot/add-spot'>
               <AddSpot />
+            </Route>
+            <Route path='/the-spot/update-spot'>
+              <UpdateSpot />
             </Route>
             <Route path='/the-spot/sign-in'>
               <SignIn />

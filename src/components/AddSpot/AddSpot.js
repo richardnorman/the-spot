@@ -15,7 +15,7 @@ import './AddSpot.css';
 import App from '../../App';
 import { Link } from 'react-router-dom';
 import { connect, useSelector, useDispatch } from 'react-redux';
-import { addSpot } from '../../actions';
+import { addSpot, updateSpot, removeSpot } from '../../actions';
 import {
     ADD_SPOT
 } from '../../constants';
@@ -29,16 +29,17 @@ const useStyles = makeStyles({
     },
 });
 
-const AddSpot = () => {
+const AddSpot = ({isUpdating = false, id = '', name = '', description = '', image = '', coords = '', dateCreated = ''}) => {
     const spotList = useSelector(state => state.modifySpotList.spotList);
+    const currentUser = useSelector(state => state.changeCurrentUser.currentUserEmail);
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const [spotName, setSpotName] = useState('');
-    const [spotDescription, setSpotDescription] = useState('');
-    const [spotLocation, setSpotLocation] = useState('');
+    const [spotName, setSpotName] = useState(name);
+    const [spotDescription, setSpotDescription] = useState(description);
+    const [spotLocation, setSpotLocation] = useState(coords);
     const [useCurrentLocation, setUseCurrentLocation] = useState(false);
-    const [spotImage, setSpotImage] = useState('');
+    const [spotImage, setSpotImage] = useState(image);
 
     const handleAddImageClicked = _ => {
         setSpotImage(prompt('Enter image URL:') || '');
@@ -69,7 +70,7 @@ const AddSpot = () => {
     }
 
     return (
-        <Fragment>
+        <div className='page'>
             <div className='editable-card'>
                 <Card className={classes.root}>
                         <CardMedia
@@ -77,44 +78,119 @@ const AddSpot = () => {
                             image={spotImage === '' ? 'https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png' : spotImage}
                         />
                         <CardContent>
-                        <Button onClick={handleAddImageClicked} className='add-image-button' variant="contained">Add image</Button>
-                            <TextField className='inputs' id='standard-basic' label='Name' onChange={(event => setSpotName(event.target.value))}/>
-                            <TextField className='inputs' id='standard-basic' label='Description' onChange={(event => setSpotDescription(event.target.value))}/>
-                            <FormControlLabel
+                        <Button onClick={handleAddImageClicked} className='add-image-button' variant="contained">{ isUpdating ? 'Edit Image' : 'Add image'}</Button>
+                            <TextField className='inputs' id='standard-basic' label='Name' onChange={(event => setSpotName(event.target.value))} value={spotName}/>
+                            <TextField className='inputs' id='standard-basic' label='Description' onChange={(event => setSpotDescription(event.target.value))} value={spotDescription}/>
+                            
+                            { isUpdating ? null :
+                                <Fragment>
+                                <FormControlLabel
                                 className='use-location-switch'
                                 control={
-                                <Switch                                    
-                                    name="checkedB"
-                                    checked={useCurrentLocation}
-                                    onChange={handleUseCurrentLocationChanged}
-                                    color="primary"
-                                />
-                                }
-                                label="Use current location"
-                            />
-                            {useCurrentLocation ? 
-                                null :
-                                <TextField 
-                                className='inputs' 
-                                id='standard-basic' 
-                                label='Location' 
-                                onChange={event => setSpotLocation(event.target.value)}/>}
+                                    <Switch                                    
+                                        name="checkedB"
+                                        checked={useCurrentLocation}
+                                        onChange={handleUseCurrentLocationChanged}
+                                        color="primary"
+                                    />
+                                    }
+                                    label="Use current location"
+                                    />
+                                    {useCurrentLocation ? 
+                                        null :
+                                        <TextField 
+                                        className='inputs' 
+                                        id='standard-basic' 
+                                        label='Location' 
+                                        onChange={event => setSpotLocation(event.target.value)}/>}
+                                </Fragment>
+                            }
                         </CardContent>
                 </Card>
             </div>
             <Link to='/the-spot/' style={{ textDecoration: 'none' }}>
                 <Fab disabled={(spotName === '' || spotLocation === '') ? true : false} onClick={() => {
-                    dispatch(addSpot([
-                            {title: spotName, 
-                            description: spotDescription, 
-                            image: spotImage === '' ? 'https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png' : spotImage, 
-                            coords: spotLocation},
-                            ...spotList]))}}
+                    if(isUpdating) {
+                        // dispatch(updateSpot(
+                        //     {
+                        //         id: id,
+                        //         title: spotName,
+                        //         description: spotDescription, 
+                        //         image: spotImage === '' ? 'https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png' : spotImage, 
+                        //         coords: spotLocation,
+                        //         dateCreated: dateCreated
+                        //     }
+                        // ))
+                        fetch(`http://localhost:3001/update-spot/${currentUser}`, {
+                            method: 'put',    
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                id: id,
+                                title: spotName,
+                                description: spotDescription, 
+                                image: spotImage === '' ? 'https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png' : spotImage, 
+                                coords: spotLocation,
+                                dateCreated: dateCreated
+                            })
+                        })
+                        .then(response => response.json())
+                        .catch(err => console.log(err))
+                    } else {
+                        // add spot to store
+                        // dispatch(addSpot(
+                        //         {
+                        //             title: spotName, 
+                        //             description: spotDescription, 
+                        //             image: spotImage === '' ? 'https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png' : spotImage, 
+                        //             coords: spotLocation
+                        //     }))
+                            // add spot to db
+                            fetch(`http://localhost:3001/add-spot/${currentUser}`, {
+                                method: 'post',    
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({
+                                    title: spotName, 
+                                    description: spotDescription, 
+                                    image: spotImage === '' ? 'https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png' : spotImage, 
+                                    coords: spotLocation
+                                })
+                            })
+                            .then(response => response.json())
+                            .catch(err => console.log(err))
+                        }
+                    }
+                    }
                      color='primary' className='done-button' variant="extended">
                 Done
                 </Fab>
             </Link>
-        </Fragment>
+            { isUpdating ?
+                <Link to='/the-spot/' style={{ textDecoration: 'none' }}>
+                    <Button className='remove-spot-button' onClick={() => {
+                            fetch(`http://localhost:3001/remove-spot/${currentUser}`, {
+                                method: 'delete',
+                                headers: {'Content-Type': 'application/json'},
+                                body: JSON.stringify({
+                                    id: id
+                                })
+                            })
+                            .then(response => response.json())
+                            .catch(err => console.log(err))
+                        // dispatch(removeSpot(
+                        //         {id: id,
+                        //         title: spotName, 
+                        //         description: spotDescription, 
+                        //         image: spotImage === '' ? 'https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png' : spotImage, 
+                        //         coords: spotLocation}
+                        //         ))
+                            }
+                        }
+                        color='secondary'>
+                    Remove Spot
+                    </Button>
+                </Link>
+            : null }
+        </div>
     );
 }
 

@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { useHistory } from 'react-router-dom';
 import './SpotCard.css';
 
 const useStyles = makeStyles({
@@ -18,11 +19,12 @@ const useStyles = makeStyles({
     },
 });
 
-const SpotCard = ({ title, description, image, coords }) => {
+const SpotCard = ({ id = '', title = '', description = '', image = '', coords, dateCreated = '' }) => {
     const classes = useStyles();
+    const history = useHistory();
 
     return (
-        <div className='card-container'>
+        <div onClick={() => {history.push(`/the-spot/update-spot?id=${id}&name=${title}&description=${description}&image=${image}&coords=${coords}&dateCreated=${dateCreated}`)}} className='card-container'>
             <Card className={classes.root}>
                 <CardActionArea>
                     <CardMedia

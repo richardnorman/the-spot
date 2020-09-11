@@ -1,15 +1,20 @@
+.page {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
 .editable-card {
     margin: 5% 0 0 10%;
 }
 
 .done-button {
     width: 60% !important;
-    margin: 5% 20% 5% 20% !important;
+    margin: 8% 20% 3% 20% !important;
 }
 
 .add-image-button {
     width: 50% !important;
-    margin: 0 25% 0 25% !important;
+    margin: 0 25% 5% 25% !important;
 }
 
 .add-spot-title {
@@ -22,4 +27,9 @@
 
 .use-location-switch {
     margin-top: 1rem;
+}
+
+.remove-spot-button {
+    width: 60% !important;
+    margin: 0% 20% 5% 20% !important;
 }
