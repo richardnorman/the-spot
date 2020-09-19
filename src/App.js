@@ -25,7 +25,11 @@ export default function App() {
   const currentUser = useSelector(state => state.changeCurrentUser.currentUserEmail);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/get-spots/${currentUser}`)
+    if(!currentUser) {
+      history.push('/the-spot/sign-in')
+      return;
+    }
+    fetch(`https://the-spot01.herokuapp.com/get-spots/${currentUser}`)
     .then(response => response.json())
     .then(data => {
       dispatch(setSpotList(data));

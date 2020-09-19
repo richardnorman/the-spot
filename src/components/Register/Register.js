@@ -16,7 +16,7 @@ const Register = _ => {
     const history = useHistory();
 
     const handleRegister = _ => {
-        fetch('http://localhost:3001/register', {
+        fetch('https://the-spot01.herokuapp.com/register', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

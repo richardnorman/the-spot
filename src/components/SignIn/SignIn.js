@@ -19,7 +19,7 @@ const SignIn = _ => {
     const dispatch = useDispatch();
 
     const handleSignIn = _ => {
-        fetch('http://localhost:3001/sign-in', {
+        fetch('https://the-spot01.herokuapp.com/sign-in', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

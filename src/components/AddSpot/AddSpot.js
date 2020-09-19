@@ -111,17 +111,7 @@ const AddSpot = ({isUpdating = false, id = '', name = '', description = '', imag
             <Link to='/the-spot/' style={{ textDecoration: 'none' }}>
                 <Fab disabled={(spotName === '' || spotLocation === '') ? true : false} onClick={() => {
                     if(isUpdating) {
-                        // dispatch(updateSpot(
-                        //     {
-                        //         id: id,
-                        //         title: spotName,
-                        //         description: spotDescription, 
-                        //         image: spotImage === '' ? 'https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png' : spotImage, 
-                        //         coords: spotLocation,
-                        //         dateCreated: dateCreated
-                        //     }
-                        // ))
-                        fetch(`http://localhost:3001/update-spot/${currentUser}`, {
+                        fetch(`https://the-spot01.herokuapp.com/update-spot/${currentUser}`, {
                             method: 'put',    
                             headers: {'Content-Type': 'application/json'},
                             body: JSON.stringify({
@@ -136,16 +126,8 @@ const AddSpot = ({isUpdating = false, id = '', name = '', description = '', imag
                         .then(response => response.json())
                         .catch(err => console.log(err))
                     } else {
-                        // add spot to store
-                        // dispatch(addSpot(
-                        //         {
-                        //             title: spotName, 
-                        //             description: spotDescription, 
-                        //             image: spotImage === '' ? 'https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png' : spotImage, 
-                        //             coords: spotLocation
-                        //     }))
                             // add spot to db
-                            fetch(`http://localhost:3001/add-spot/${currentUser}`, {
+                            fetch(`https://the-spot01.herokuapp.com/add-spot/${currentUser}`, {
                                 method: 'post',    
                                 headers: {'Content-Type': 'application/json'},
                                 body: JSON.stringify({
@@ -167,7 +149,7 @@ const AddSpot = ({isUpdating = false, id = '', name = '', description = '', imag
             { isUpdating ?
                 <Link to='/the-spot/' style={{ textDecoration: 'none' }}>
                     <Button className='remove-spot-button' onClick={() => {
-                            fetch(`http://localhost:3001/remove-spot/${currentUser}`, {
+                            fetch(`https://the-spot01.herokuapp.com/remove-spot/${currentUser}`, {
                                 method: 'delete',
                                 headers: {'Content-Type': 'application/json'},
                                 body: JSON.stringify({
@@ -176,13 +158,6 @@ const AddSpot = ({isUpdating = false, id = '', name = '', description = '', imag
                             })
                             .then(response => response.json())
                             .catch(err => console.log(err))
-                        // dispatch(removeSpot(
-                        //         {id: id,
-                        //         title: spotName, 
-                        //         description: spotDescription, 
-                        //         image: spotImage === '' ? 'https://bhmlib.org/wp-content/themes/cosimo-pro/images/no-image-box.png' : spotImage, 
-                        //         coords: spotLocation}
-                        //         ))
                             }
                         }
                         color='secondary'>
