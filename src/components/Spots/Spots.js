@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import SpotCard from './components/SpotCard/SpotCard';
-import AddSpotButton from './components/AddSpotButton/AddSpotButton';
-import NavBar from './components/NavBar/NavBar';
+import SpotCard from './SpotCard/SpotCard';
+import AddSpotButton from './AddSpotButton/AddSpotButton';
+import NavBar from './NavBar/NavBar';
 import { Link, useHistory } from 'react-router-dom';
-import { setSpotList } from './actions';
+import { setSpotList } from '../../actions';
 import { useSelector, useDispatch } from 'react-redux';
 
 const Spots = _ => {
