@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/the-spot/static/css/main.37b06679.chunk.css",
-    "main.js": "/the-spot/static/js/main.e7095f94.chunk.js",
-    "main.js.map": "/the-spot/static/js/main.e7095f94.chunk.js.map",
+    "main.js": "/the-spot/static/js/main.9657dd8b.chunk.js",
+    "main.js.map": "/the-spot/static/js/main.9657dd8b.chunk.js.map",
     "runtime-main.js": "/the-spot/static/js/runtime-main.f148e1ad.js",
     "runtime-main.js.map": "/the-spot/static/js/runtime-main.f148e1ad.js.map",
     "static/js/2.fe19831a.chunk.js": "/the-spot/static/js/2.fe19831a.chunk.js",
     "static/js/2.fe19831a.chunk.js.map": "/the-spot/static/js/2.fe19831a.chunk.js.map",
     "index.html": "/the-spot/index.html",
-    "precache-manifest.1009076f233f27a32105d704e2759b01.js": "/the-spot/precache-manifest.1009076f233f27a32105d704e2759b01.js",
+    "precache-manifest.5cb34437d4a578b39a93b4edb4661e2d.js": "/the-spot/precache-manifest.5cb34437d4a578b39a93b4edb4661e2d.js",
     "service-worker.js": "/the-spot/service-worker.js",
     "static/css/main.37b06679.chunk.css.map": "/the-spot/static/css/main.37b06679.chunk.css.map",
     "static/js/2.fe19831a.chunk.js.LICENSE.txt": "/the-spot/static/js/2.fe19831a.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.f148e1ad.js",
     "static/js/2.fe19831a.chunk.js",
     "static/css/main.37b06679.chunk.css",
-    "static/js/main.e7095f94.chunk.js"
+    "static/js/main.9657dd8b.chunk.js"
   ]
 }
