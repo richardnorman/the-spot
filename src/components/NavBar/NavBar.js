@@ -9,8 +9,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Drawer from '@material-ui/core/Drawer';
 import {useSelector, useDispatch} from 'react-redux';
-import { changeSearch } from '../../actions';
+import { changeSearch, changeCurrentUser } from '../../actions';
 import { Link } from 'react-router-dom';
+import { dispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -109,7 +110,7 @@ const NavBar = () => {
                 </Toolbar>
             </AppBar>
             <Drawer anchor={"left"} open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                <Link to='/the-spot/sign-in' style={{textDecoration: 'none', color: 'black'}}>
+                <Link onClick={() => { dispatch(changeCurrentUser('')) }} to='/the-spot/sign-in' style={{textDecoration: 'none', color: 'black'}}>
                     <h2 style={{paddingLeft: '15px', paddingRight: '60px', cursor: 'pointer'}}>Sign out</h2>
                 </Link>
             </Drawer>
